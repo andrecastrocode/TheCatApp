@@ -4,8 +4,13 @@ plugins {
 }
 
 def getApiKey() {
+    def apikeyPropertiesFile = rootProject.file("secrets.properties")
+    if (!apikeyPropertiesFile.exists()) {
+        apikeyPropertiesFile.createNewFile()
+        apikeyPropertiesFile.text="CAT_API_KEY=;\n"
+    }
     Properties props = new Properties()
-    props.load(new FileInputStream(new File('secrets.properties')))
+    props.load(new FileInputStream(apikeyPropertiesFile))
     return props['CAT_API_KEY']
 }
 
@@ -41,15 +46,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'ac.andrecastro.thecatapp'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    testImplementation 'junit:junit:4.+'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
