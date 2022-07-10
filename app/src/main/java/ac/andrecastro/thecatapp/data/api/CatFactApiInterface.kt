@@ -1,6 +1,6 @@
 package ac.andrecastro.thecatapp.data.api
 
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
 
 data class Fact(
@@ -10,5 +10,5 @@ data class Fact(
 interface CatFactApiInterface {
 
     @GET("fact")
-    fun randomFact(): Call<Fact>
+    fun randomFact(): Single<Fact>
 }
