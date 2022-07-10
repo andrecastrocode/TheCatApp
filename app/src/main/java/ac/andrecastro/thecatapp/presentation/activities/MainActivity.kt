@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var catFactTextView: TextView
     private lateinit var catImageImageView: ImageView
     private lateinit var moreFactsButton: Button
+    private lateinit var defaultCatFact: String
 
     private val viewModel: CatFactViewModel by viewModels()
 
@@ -36,10 +37,9 @@ class MainActivity : AppCompatActivity() {
         catImageImageView = findViewById(R.id.cat_image)
         catFactTextView = findViewById(R.id.cat_fact)
         moreFactsButton = findViewById(R.id.more_facts_button)
+        defaultCatFact = getString(R.string.defaultCatFact)
     }
 
-    // TODO: implement string resources
-    @SuppressLint("SetTextI18n")
     private fun initObservers() {
         viewModel.catFactLiveData.observe(this) {
             when (it) {
@@ -51,8 +51,7 @@ class MainActivity : AppCompatActivity() {
                     catFactTextView.text = it.data.fact
                 }
                 is UiState.Error -> {
-                    catFactTextView.text =
-                        "Cats are soooooo cute and this is totally not an hardcoded fact"
+                    catFactTextView.text = defaultCatFact
                 }
             }
         }

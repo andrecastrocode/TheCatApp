@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TheCatApp</string>
+    <string name="defaultCatFact">Cats are soooooo cute and this is totally not an hardcoded fact</string>
 </resources>
