@@ -3,7 +3,6 @@ package ac.andrecastro.thecatapp.presentation.activities
 import ac.andrecastro.thecatapp.R
 import ac.andrecastro.thecatapp.presentation.UiState
 import ac.andrecastro.thecatapp.presentation.viewmodel.CatFactViewModel
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
