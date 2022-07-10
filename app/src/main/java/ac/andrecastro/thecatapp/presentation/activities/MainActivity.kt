@@ -1,5 +1,9 @@
-package ac.andrecastro.thecatapp
+package ac.andrecastro.thecatapp.presentation.activities
 
+import ac.andrecastro.thecatapp.R
+import ac.andrecastro.thecatapp.data.api.CatFactApi
+import ac.andrecastro.thecatapp.data.api.CatFactApiInterface
+import ac.andrecastro.thecatapp.data.api.Fact
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,31 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import java.util.concurrent.TimeUnit
-
-data class Fact(
-    val fact: String
-)
-
-interface CatFactApi {
-
-    @GET("fact")
-    fun randomFact() : Call<Fact>
-}
 
 class MainActivity : AppCompatActivity() {
     private lateinit var catFactTextView: TextView
     private lateinit var catImageImageView: ImageView
     private lateinit var moreFactsButton: Button
-    private lateinit var catFactApi: CatFactApi
+    private lateinit var catFactApi: CatFactApiInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         catFactTextView = findViewById(R.id.cat_fact)
         moreFactsButton = findViewById(R.id.more_facts_button)
 
-        catFactApi = adapter("https://catfact.ninja/").create(CatFactApi::class.java)
+        catFactApi = CatFactApi().catFactApi
 
         newImage()
         newFact()
@@ -83,25 +71,5 @@ class MainActivity : AppCompatActivity() {
             newImage()
         }
     }
-    private val okHttpClient : OkHttpClient by lazy {
-        val builder = OkHttpClient().newBuilder()
-            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .retryOnConnectionFailure(false)
-        builder.build()
-    }
 
-    private fun adapter(endPoint : String) : Retrofit {
-        val builder = Retrofit.Builder()
-            .baseUrl(endPoint)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-        return builder.build()
-    }
-
-    companion object {
-        private const val TIMEOUT = 10L
-    }
 }
