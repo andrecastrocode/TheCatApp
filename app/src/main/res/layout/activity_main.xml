@@ -28,6 +28,18 @@
         app:layout_constraintTop_toBottomOf="@+id/cat_image"
         tools:text="CAT FACT! CAT FACT! CAT FACT! CAT FACT! CAT FACT! CAT FACT! CAT FACT! CAT FACT! " />
 
+    <ProgressBar
+        android:id="@+id/cat_fact_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="@+id/cat_image"
+        app:layout_constraintTop_toTopOf="@+id/cat_image"
+        app:layout_constraintEnd_toEndOf="@+id/cat_image"
+        app:layout_constraintBottom_toBottomOf="@+id/cat_image"
+        android:visibility="gone"
+        />
+
     <Button
         android:id="@+id/more_facts_button"
         android:layout_marginBottom="24dp"
