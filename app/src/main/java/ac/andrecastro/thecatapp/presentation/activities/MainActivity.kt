@@ -21,6 +21,10 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val cCatGifURL: String = "https://cataas.com/cat/gif"
+    }
+
     private lateinit var catImageImageView: ImageView
     private lateinit var catFactTextView: TextView
     private lateinit var catFactProgressBar: ProgressBar
@@ -70,7 +74,8 @@ class MainActivity : AppCompatActivity() {
     private fun newImage() {
         catFactProgressBar.visibility = View.VISIBLE
         Glide.with(this)
-            .load("https://cataas.com/cat/gif")
+            .load(cCatGifURL)
+            .error(R.drawable.default_cat)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -78,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    catFactProgressBar.visibility = View.GONE
                     return false
                 }
 
