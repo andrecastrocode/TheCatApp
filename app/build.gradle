@@ -16,12 +16,12 @@ def getApiKey() {
 }
 
 android {
-    compileSdk 31
+    compileSdk 34
 
     defaultConfig {
         applicationId "ac.andrecastro.thecatapp"
         minSdk 28
-        targetSdk 31
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -36,7 +36,7 @@ android {
     }
 
 
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         variant.buildConfigField "String", "CAT_API_KEY", "\"" + getApiKey() + "\""
     }
 
