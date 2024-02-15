@@ -1,4 +1,4 @@
-package ac.andrecastro.thecatapp.presentation
+package ac.andrecastro.thecatapp.presentation.viewmodel
 
 sealed class UiState<out T : Any> {
     object Loading : UiState<Nothing>()

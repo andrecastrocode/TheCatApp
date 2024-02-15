@@ -24,7 +24,7 @@ class CatFactApi {
         builder.build()
     }
 
-    fun adapter(): Retrofit {
+    private fun adapter(): Retrofit {
         val builder = Retrofit.Builder()
             .baseUrl(ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())

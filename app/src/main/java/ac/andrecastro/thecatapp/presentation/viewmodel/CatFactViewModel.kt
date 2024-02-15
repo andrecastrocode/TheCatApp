@@ -3,15 +3,13 @@ package ac.andrecastro.thecatapp.presentation.viewmodel
 import ac.andrecastro.thecatapp.data.api.CatFactApi
 import ac.andrecastro.thecatapp.data.api.CatFactApiInterface
 import ac.andrecastro.thecatapp.data.api.Fact
-import ac.andrecastro.thecatapp.presentation.DefaultSchedulerProvider
-import ac.andrecastro.thecatapp.presentation.SchedulerProvider
-import ac.andrecastro.thecatapp.presentation.UiState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 class CatFactViewModel : ViewModel() {
+
     private val schedulerProvider: SchedulerProvider = DefaultSchedulerProvider()
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val catFactApi: CatFactApiInterface = CatFactApi().catFactApi
@@ -19,6 +17,10 @@ class CatFactViewModel : ViewModel() {
     private val catFactMutableLiveData = MutableLiveData<UiState<Fact>>()
     val catFactLiveData: LiveData<UiState<Fact>>
         get() = catFactMutableLiveData
+
+    init {
+        getCatFact()
+    }
 
     fun getCatFact() {
         catFactApi.randomFact()
