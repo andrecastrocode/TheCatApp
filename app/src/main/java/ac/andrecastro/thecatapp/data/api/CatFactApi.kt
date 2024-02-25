@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class CatFactApi {
 
-    val catFactApi by lazy {
+    val catFactApiImpl by lazy {
         initCatFactApi()
     }
 

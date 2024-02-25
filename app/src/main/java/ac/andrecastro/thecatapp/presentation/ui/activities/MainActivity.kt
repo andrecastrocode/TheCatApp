@@ -1,3 +1,6 @@
+
+@file:Suppress("FunctionNaming")
+
 package ac.andrecastro.thecatapp.presentation.ui.activities
 
 import ac.andrecastro.thecatapp.R
@@ -19,6 +22,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +35,8 @@ import com.bumptech.glide.integration.compose.placeholder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.signature.ObjectKey
 
+private const val WEIGHT = 8f
+
 @OptIn(ExperimentalGlideComposeApi::class)
 class MainActivity : ComponentActivity() {
     companion object {
@@ -42,73 +48,76 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TheCatAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val catFactValue = catFactViewModel.catFactLiveData.observeAsState()
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Spacer(Modifier.weight(1f))
-
-                        val stringSignature = System.currentTimeMillis().toString()
-                        @Suppress("DEPRECATION")
-                        GlideImage(
-                            model = cCatGifURL,
-                            contentDescription = "catGifs",
-                            modifier = Modifier
-                                .size(300.dp, 400.dp),
-                            loading = placeholder {
-                                CircularProgressIndicator(modifier = Modifier.size(300.dp, 400.dp))
-                            },
-                            failure = placeholder(R.drawable.default_cat),
-                            transition = CrossFade
-                        ) {
-                            it.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .signature(ObjectKey(stringSignature))
-                        }
-
-                        val catFactText: String =
-
-                            when (catFactValue.value) {
-                                is UiState.Loading -> {
-                                    "Loading"
-                                }
-
-                                is UiState.Display -> (catFactValue.value as UiState.Display<Fact>).data.fact
-
-                                is UiState.Error -> getString(R.string.defaultCatFact)
-                                else -> getString(R.string.defaultCatFact)
-
-                            }
-                        Spacer(Modifier.weight(1f))
-
-                        Text(
-                            text = catFactText,
-                            fontSize = 24.sp,
-                            modifier = Modifier
-                                .weight(8f)
-                                .padding(start = 10.dp, end = 10.dp)
-                        )
-
-                        Button(
-                            onClick = {
-                                catFactViewModel.getCatFact()
-                            },
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(bottom = 24.dp)
-                        ) {
-                            Text(text = "More cat facts!")
-                        }
-                    }
-                }
+                MainActivityContent()
             }
         }
     }
 
+    @Composable
+    private fun MainActivityContent() {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            val catFactValue = catFactViewModel.catFactLiveData.observeAsState()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(Modifier.weight(1f))
+
+                val stringSignature = System.currentTimeMillis().toString()
+                @Suppress("DEPRECATION")
+                GlideImage(
+                    model = cCatGifURL,
+                    contentDescription = "catGifs",
+                    modifier = Modifier
+                        .size(300.dp, 400.dp),
+                    loading = placeholder {
+                        CircularProgressIndicator(modifier = Modifier.size(300.dp, 400.dp))
+                    },
+                    failure = placeholder(R.drawable.default_cat),
+                    transition = CrossFade
+                ) {
+                    it.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .signature(ObjectKey(stringSignature))
+                }
+
+                val catFactText: String =
+
+                    when (catFactValue.value) {
+                        is UiState.Loading -> {
+                            "Loading"
+                        }
+
+                        is UiState.Display -> (catFactValue.value as UiState.Display<Fact>).data.fact
+
+                        is UiState.Error -> getString(R.string.defaultCatFact)
+                        else -> getString(R.string.defaultCatFact)
+                    }
+                Spacer(Modifier.weight(1f))
+
+                Text(
+                    text = catFactText,
+                    fontSize = 24.sp,
+                    modifier = Modifier
+                        .weight(WEIGHT)
+                        .padding(start = 10.dp, end = 10.dp)
+                )
+
+                Button(
+                    onClick = {
+                        catFactViewModel.getCatFact()
+                    },
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(bottom = 24.dp)
+                ) {
+                    Text(text = "More cat facts!")
+                }
+            }
+        }
+    }
 }

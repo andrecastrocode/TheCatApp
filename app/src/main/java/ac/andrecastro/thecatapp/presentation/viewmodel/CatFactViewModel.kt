@@ -12,7 +12,7 @@ class CatFactViewModel : ViewModel() {
 
     private val schedulerProvider: SchedulerProvider = DefaultSchedulerProvider()
     private val disposables: CompositeDisposable = CompositeDisposable()
-    private val catFactApi: CatFactApiInterface = CatFactApi().catFactApi
+    private val catFactApi: CatFactApiInterface = CatFactApi().catFactApiImpl
 
     private val catFactMutableLiveData = MutableLiveData<UiState<Fact>>()
     val catFactLiveData: LiveData<UiState<Fact>>
@@ -36,7 +36,8 @@ class CatFactViewModel : ViewModel() {
                 {
                     catFactMutableLiveData.value =
                         UiState.Error(message = "Your cat fact is not available right now")
-                }).also {
+                }
+            ).also {
                 disposables.add(it)
             }
     }

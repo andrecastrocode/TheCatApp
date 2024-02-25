@@ -1,3 +1,6 @@
+
+@file:Suppress("MagicNumber")
+
 package ac.andrecastro.thecatapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
