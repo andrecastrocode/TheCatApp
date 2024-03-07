@@ -67,6 +67,9 @@ dependencies {
 
     implementation 'androidx.compose.material3:material3:1.2.0'
 
+    implementation "androidx.glance:glance-appwidget:1.0.0"
+    implementation "androidx.glance:glance-material3:1.0.0"
+
     ksp 'com.github.bumptech.glide:ksp:4.14.2'
     
     //Retrofit - https://github.com/square/retrofit
